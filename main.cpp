@@ -1,6 +1,9 @@
-#include <iostream>
+#include "repl/repl.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    Repl repl;
+    repl.lexerTest();
+
     return 0;
 }
+

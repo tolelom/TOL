@@ -1,0 +1,33 @@
+#include "utf8Converter.h"
+
+vector<string> Utf8Converter::run(const string& input) {
+    this->input = input;
+    vector<string> characters;
+
+    for (int position = 0, length; position < input.size(); position += length) {
+        length = getCharacterLength(position);
+        characters.push_back(this->input.substr(position, length));
+        // Warning: length가 길이를 초과할 수도 있다.
+    }
+
+    return characters;
+}
+
+int Utf8Converter::getCharacterLength(int position) {
+    int length = 0;
+
+    if (input[position] & 0x80) {
+        length++;
+        if (input[position] & 0x40) {
+            length++;
+            if (input[position] & 0x20) {
+                length++;
+                if (input[position] & 0x10) {
+                    length++;
+                }
+            }
+        }
+    }
+
+    return (length == 0) ? 1 : length;
+}
