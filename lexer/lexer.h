@@ -25,10 +25,12 @@ private:
     void tokenizing();
 
     void skipCharacter();
-    bool isLetter(const string& character);
-    bool isNumber(const string& character);
+    static bool isLetter(const string& character);
+    static bool isNumber(const string& character);
     string readNumber();
     string readLetter();
+    bool canMakeSpaceToTab();
+    long long countAndSkipTab();
 
     map<string, TokenType> keywords = {
             {"정수", TokenType::INT},

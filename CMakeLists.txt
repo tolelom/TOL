@@ -14,4 +14,10 @@ add_executable(TOL main.cpp
         utf8Converter/utf8Converter.cpp
         utf8Converter/utf8Converter.h
         exception/exception.h
-        exception/lexerException/lexerException.h)
+        exception/lexerException/lexerException.h
+        parser/parser.cpp
+        parser/parser.h
+        ast/node.h
+        ast/program.h
+        ast/statement/statement.h
+        exception/parserException/parserException.h)

@@ -4,7 +4,7 @@ vector<string> Utf8Converter::run(const string& input) {
     this->input = input;
     vector<string> characters;
 
-    for (int position = 0, length; position < input.size(); position += length) {
+    for (long long position = 0, length; position < input.size(); position += length) {
         length = getCharacterLength(position);
         characters.push_back(this->input.substr(position, length));
         // Warning: length가 길이를 초과할 수도 있다.
@@ -13,8 +13,8 @@ vector<string> Utf8Converter::run(const string& input) {
     return characters;
 }
 
-int Utf8Converter::getCharacterLength(int position) {
-    int length = 0;
+long long Utf8Converter::getCharacterLength(long long position) {
+    long long length = 0;
 
     if (input[position] & 0x80) {
         length++;

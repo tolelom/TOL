@@ -12,7 +12,7 @@ public:
 
 private:
     string input;
-    int getCharacterLength(int position);
+    long long getCharacterLength(long long position);
 };
 
 

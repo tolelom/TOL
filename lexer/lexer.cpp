@@ -1,8 +1,10 @@
 #include "lexer.h"
 
+#include <utility>
+
 
 vector<Token*> Lexer::run(vector<string> characters) {
-    this->characters = characters;
+    this->characters = std::move(characters);
     initialization();
 
     try {
@@ -27,13 +29,35 @@ void Lexer::initialization() {
 void Lexer::tokenizing() {
     while (currentReadPoint < characters.size()) {
         if (characters[currentReadPoint] == "\n") {
-            tokens.push_back(new Token{TokenType::NEW_LINE, characters[currentReadPoint], line});
+            long long count = countAndSkipTab();
+            if (indentLevel < count) {
+                tokens.push_back(new Token{TokenType::NEW_LINE, characters[currentReadPoint], line});
+//                tokens.push_back(new Token{})
+            }
+            else if (count < indentLevel) {
+                tokens.push_back(new Token{TokenType::NEW_LINE, characters[currentReadPoint], line});
+
+            }
+            else {
+                tokens.push_back(new Token{TokenType::NEW_LINE, characters[currentReadPoint], line});
+
+            }
+            indentLevel = count;
+            line++;
         }
         else if (characters[currentReadPoint] == "\t") {
             tokens.push_back((new Token{TokenType::TAB, characters[currentReadPoint], line}));
         }
         else if (characters[currentReadPoint] == " ") {
-            tokens.push_back(new Token{TokenType::SPACE, characters[currentReadPoint], line});
+            if (canMakeSpaceToTab()) {
+                tokens.push_back(new Token{TokenType::TAB, "\t", line});
+                skipCharacter();
+                skipCharacter();
+                skipCharacter();
+                // TODO: tabcount
+            } else {
+                tokens.push_back(new Token{TokenType::SPACE, characters[currentReadPoint], line});
+            }
         }
 
         else if (characters[currentReadPoint] == ":") {
@@ -54,7 +78,7 @@ void Lexer::tokenizing() {
             tokens.push_back(new Token{TokenType::PLUS, characters[currentReadPoint], line});
         }
         else if (characters[currentReadPoint] == "-") {
-            if (characters[nextReadPoint] == ">") {
+            if (nextReadPoint < characters.size() && characters[nextReadPoint] == ">") {
                 tokens.push_back(new Token{TokenType::RIGHTARROW, characters[currentReadPoint] + characters[nextReadPoint], line});
                 skipCharacter();
             } else {
@@ -68,7 +92,7 @@ void Lexer::tokenizing() {
             tokens.push_back(new Token{TokenType::SLASH, characters[currentReadPoint], line});
         }
         else if (characters[currentReadPoint] == "=") {
-            if (characters[nextReadPoint] == "=") {
+            if (nextReadPoint < characters.size() && characters[nextReadPoint] == "=") {
                 tokens.push_back(new Token{TokenType::EQUAL, characters[currentReadPoint] + characters[nextReadPoint], line});
                 skipCharacter();
             } else {
@@ -76,7 +100,7 @@ void Lexer::tokenizing() {
             }
         }
         else if (characters[currentReadPoint] == "!") {
-            if (characters[nextReadPoint] == "=") {
+            if (nextReadPoint < characters.size() && characters[nextReadPoint] == "=") {
                 tokens.push_back(new Token{TokenType::NOT_EQUAL, characters[currentReadPoint] + characters[nextReadPoint], line});
                 skipCharacter();
             } else {
@@ -104,7 +128,7 @@ void Lexer::tokenizing() {
         }
 
         else if (characters[currentReadPoint] == "<") {
-            if (characters[nextReadPoint] == "=") {
+            if (nextReadPoint < characters.size() && characters[nextReadPoint] == "=") {
                 tokens.push_back(new Token{TokenType::LESS_EQUAL, characters[currentReadPoint] + characters[nextReadPoint], line});
                 skipCharacter();
             } else {
@@ -112,7 +136,7 @@ void Lexer::tokenizing() {
             }
         }
         else if (characters[currentReadPoint] == ">") {
-            if (characters[nextReadPoint] == "=") {
+            if (nextReadPoint < characters.size() && characters[nextReadPoint] == "=") {
                 tokens.push_back(new Token{TokenType::GREATER_EQUAL, characters[currentReadPoint] + characters[nextReadPoint], line});
                 skipCharacter();
             } else {
@@ -122,7 +146,7 @@ void Lexer::tokenizing() {
 
 
         else if (isNumber(characters[currentReadPoint])) {
-            string number = readLetter();
+            string number = readNumber();
             tokens.push_back(new Token{TokenType::INTEGER, number, line});
         }
         else if (isLetter(characters[currentReadPoint])) {
@@ -169,4 +193,22 @@ string Lexer::readLetter() {
         letter += characters[currentReadPoint];
     }
     return letter;
+}
+
+bool Lexer::canMakeSpaceToTab() {
+    for (long long counter = 1; currentReadPoint + counter < characters.size() && characters[currentReadPoint + counter] == " "; counter++) {
+        if (counter == 4) {
+            return true;
+        }
+    }
+    return false;
+}
+
+long long Lexer::countAndSkipTab() {
+    long long count = 0;
+    while (nextReadPoint < characters.size() && characters[nextReadPoint] == "\t") {
+        skipCharacter();
+        count++;
+    }
+    return count;
 }
