@@ -14,7 +14,7 @@ void Repl::lexerTest() {
         vector<Token*> tokens = lexer.run(characters);
 
         for (auto token : tokens) {
-            cout << token->line << ": " << Token::printTokenType(token->type) << endl;
+            cout << "Line " << token->line << ": " << token->literal << " " <<Token::printTokenType(token->type) << endl;
         }
     }
 }

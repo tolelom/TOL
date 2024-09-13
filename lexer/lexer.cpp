@@ -29,12 +29,12 @@ void Lexer::initialization() {
 void Lexer::tokenizing() {
     while (currentReadPoint < characters.size()) {
         if (characters[currentReadPoint] == "\n") {
-            long long count = countAndSkipTab();
-            if (indentLevel < count) {
+            long long indentCount = countIndentAndSkipTab();
+            if (indentLevel < indentCount) {
                 tokens.push_back(new Token{TokenType::NEW_LINE, characters[currentReadPoint], line});
 //                tokens.push_back(new Token{})
             }
-            else if (count < indentLevel) {
+            else if (indentCount < indentLevel) {
                 tokens.push_back(new Token{TokenType::NEW_LINE, characters[currentReadPoint], line});
 
             }
@@ -42,7 +42,7 @@ void Lexer::tokenizing() {
                 tokens.push_back(new Token{TokenType::NEW_LINE, characters[currentReadPoint], line});
 
             }
-            indentLevel = count;
+            indentLevel = indentCount;
             line++;
         }
         else if (characters[currentReadPoint] == "\t") {
@@ -204,7 +204,7 @@ bool Lexer::canMakeSpaceToTab() {
     return false;
 }
 
-long long Lexer::countAndSkipTab() {
+long long Lexer::countIndentAndSkipTab() {
     long long count = 0;
     while (nextReadPoint < characters.size() && characters[nextReadPoint] == "\t") {
         skipCharacter();

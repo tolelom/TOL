@@ -30,7 +30,7 @@ private:
     string readNumber();
     string readLetter();
     bool canMakeSpaceToTab();
-    long long countAndSkipTab();
+    long long countIndentAndSkipTab();
 
     map<string, TokenType> keywords = {
             {"정수", TokenType::INT},
