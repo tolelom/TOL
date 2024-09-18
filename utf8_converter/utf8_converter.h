@@ -8,7 +8,7 @@ using namespace std;
 
 class Utf8Converter {
 public:
-    vector<string> run(const string& input);
+    vector<string> Run(const string& input);
 
 private:
     string input;

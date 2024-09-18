@@ -5,20 +5,20 @@
 #include <vector>
 #include <string>
 #include "../token/token.h"
-#include "../exception/lexerException/lexerException.h"
+#include "../exception/lexer_exception/lexer_exception.h"
 
 using namespace std;
 
 class Lexer {
 public:
-    vector<Token*> run(vector<string> characters);
+    vector<Token*> Run(vector<string> characters);
 
 private:
     vector<string> characters;
     vector<Token*> tokens;
-    long long currentReadPoint;
-    long long nextReadPoint;
-    long long indentLevel;
+    long long current_read_point;
+    long long next_read_point;
+    long long indent_level;
     long long line;
 
     void initialization();

@@ -3,18 +3,18 @@
 
 #include <iostream>
 #include <string>
-#include "../utf8Converter/utf8Converter.h"
+#include "../utf8_converter/utf8_converter.h"
 #include "../lexer/lexer.h"
 
 using namespace std;
 
 class Repl {
 public:
-    void lexerTest();
-    void parserTest();
-    void run();
+    void LexerTest();
+    void ParserTest();
+    void Run();
 private:
-    Utf8Converter utf8Converter;
+    Utf8Converter utf8_converter;
     Lexer lexer;
 
 };

@@ -2,8 +2,8 @@
 
 int main() {
     Repl repl;
-    repl.lexerTest();
-    // repl.run();
+    repl.LexerTest();
+    // repl.Run();
     return 0;
 }
 

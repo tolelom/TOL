@@ -1,7 +1,7 @@
 #include "repl.h"
 
 
-void Repl::lexerTest() {
+void Repl::LexerTest() {
     cout << "한글 프로그래밍 언어 TOL" << endl;
     cout << "제작: tolelom, leeju1013, jh-lee-kor" << endl;
 
@@ -10,17 +10,17 @@ void Repl::lexerTest() {
         string code;
         getline(cin, code);
 
-        vector<string> characters = utf8Converter.run(code);
-        vector<Token*> tokens = lexer.run(characters);
+        vector<string> characters = utf8_converter.Run(code);
+        vector<Token*> tokens = lexer.Run(characters);
 
         for (auto token : tokens) {
-            cout << "Line " << token->line << ": " << token->literal << " " <<Token::printTokenType(token->type) << endl;
+            cout << "Line " << token->line << ": " << token->literal << " " <<Token::PrintTokenType(token->type) << endl;
         }
     }
 }
 
 
-void Repl::run() {
+void Repl::Run() {
     cout << "한글 프로그래밍 언어 TOL" << endl;
     cout << "제작: tolelom, leeju1013, jh-lee-kor" << endl;
 
@@ -29,8 +29,8 @@ void Repl::run() {
         string code;
         getline(cin, code);
 
-        vector<string> characters = utf8Converter.run(code);
-        vector<Token*> tokens = lexer.run(characters);
+        vector<string> characters = utf8_converter.Run(code);
+        vector<Token*> tokens = lexer.Run(characters);
     }
 }
 

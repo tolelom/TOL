@@ -7,7 +7,7 @@ using namespace std;
 
 class CustomException : public exception {
 public:
-    virtual void print() const = 0;
+    virtual void Print() const = 0;
 };
 
 

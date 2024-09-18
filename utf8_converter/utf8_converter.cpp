@@ -1,6 +1,7 @@
-#include "utf8Converter.h"
+#include "utf8_converter.h"
 
-vector<string> Utf8Converter::run(const string& input) {
+// vector<string> 복사하는 게 맞나..?
+vector<string> Utf8Converter::Run(const string& input) {
     this->input = input;
     vector<string> characters;
 

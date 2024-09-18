@@ -46,8 +46,6 @@ enum class TokenType {
     STR,        // 문자열
 
 
-
-
 };
 
 
